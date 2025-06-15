@@ -5,6 +5,16 @@ Este repositorio contiene el codigo fuente para el servicio de autenticacion del
 ## Pre-requisitos
 - [Node.js](https://nodejs.org/es/) (version 22.14.0)
 
+## Credenciales de pruebas
+Para probar el sistema se tienen credenciales de administrador y de usuario, estas son: 
+```bash
+email: admin@admin.com
+password: admin
+```
+```bash
+email: user@user.com
+password: user
+```
 ## Instalación y configuración
 
 1. **Clonar el repositorio**
