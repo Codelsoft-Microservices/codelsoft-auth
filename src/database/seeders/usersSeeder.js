@@ -29,7 +29,7 @@ const seedUsersMock = async () => {
         const hashedPassword = await bcrypt.hash(user.password, salt);
         await prisma.user.create({
             data: {
-                uuid: user.uuid || uuidv4(),
+                uuid: user.uuid,
                 name: user.name,
                 lastname: user.lastname,
                 email: user.email,

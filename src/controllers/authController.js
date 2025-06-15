@@ -139,4 +139,43 @@ const logout = (req, res) => {
     
 };
 
-export { authCheck, login, updatePassword, logout };
+const syncUserCreation = async (req, res) => {
+    const { uuid, name, lastname, email, password, role } = req.body;
+    if (!uuid || !name || !lastname || !email || !password || !role) {
+        return res.status(400).json({ message: "Todos los campos son requeridos." });
+    }
+    if (uuid === undefined || name === undefined || lastname === undefined || email === undefined || password === undefined || role === undefined) {
+        return res.status(400).json({ message: "Todos los campos son requeridos." });
+    }
+
+    try {
+        const existingUser = await prisma.user.findFirst({
+            where: { email: email },
+        });
+
+        if (existingUser) {
+            return res.status(409).json({ message: "El usuario ya existe." });
+        }
+
+        const newUser = await prisma.user.create({
+            data: {
+                uuid: uuid,
+                name: name,
+                lastname: lastname,
+                email: email,
+                password: password,
+                role: role,
+                isActive: true,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+        });
+
+        res.status(201).json({ message: "Usuario creado correctamente.", user: newUser });
+    } catch (error) {
+        console.error("Error al crear el usuario:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
+    }
+}
+
+export { authCheck, login, updatePassword, logout, syncUserCreation };
