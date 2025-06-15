@@ -181,4 +181,39 @@ const syncUserCreation = async (req, res) => {
     }
 }
 
-export { authCheck, login, updatePassword, logout, syncUserCreation };
+const syncPasswordUpdate = async (req, res) => {
+    const { uuid, new_password } = req.body;
+    if (!uuid || !new_password) {
+        return res.status(400).json({ message: "UUID y nueva contraseña son requeridos." });
+    }
+    if (uuid === undefined || new_password === undefined) {
+        return res.status(400).json({ message: "UUID y nueva contraseña son requeridos." });
+    }
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: { uuid: uuid },
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: "Usuario no encontrado." });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(new_password, salt);
+
+        const updatedUser = await prisma.user.update({
+            where: { uuid: uuid },
+            data: {
+                password: hashedPassword,
+                updatedAt: new Date(),
+            },
+        });
+
+        res.status(200).json({ message: "Contraseña actualizada correctamente.", user: updatedUser });
+    } catch (error) {
+        console.error("Error al actualizar la contraseña:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
+    }
+}
+export { authCheck, login, updatePassword, logout, syncUserCreation, syncPasswordUpdate };

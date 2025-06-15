@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authCheck, login, updatePassword, logout, syncUserCreation} from '../controllers/authController.js';
+import { authCheck, login, updatePassword, logout, syncUserCreation, syncPasswordUpdate} from '../controllers/authController.js';
 
 /*Configuracion del router para que funcione como el enrutador de el auth.*/
 const authRouter = Router();
@@ -11,5 +11,6 @@ authRouter.post("/login", login);
 authRouter.patch("/usuarios/:uuid", updatePassword);
 authRouter.post("/logout", logout)
 authRouter.post("/syncUserCreation", syncUserCreation);
+authRouter.post("/syncPasswordUpdate", syncPasswordUpdate);
 /*Exporte del modulo para ser llamado en app.js*/
 export default authRouter;
