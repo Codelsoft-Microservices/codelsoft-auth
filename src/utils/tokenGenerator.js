@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import { v4 as uuidv4 } from 'uuid';
 dotenv.config();
 
 export const generateTokenJWT = (user) => {
@@ -20,7 +19,7 @@ export const generateTokenJWT = (user) => {
             algorithm: process.env.ALG_TOKEN,
             issuer: 'CODELSOFT-API',
             audience: 'CODELSOFT-CLIENT',
-            jwtid: uuidv4(), // Generar un UUID único para el token
+            jwtid: "JWT-001",
         }
     );
     return token;
