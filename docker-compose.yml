@@ -1,0 +1,12 @@
+services:
+    postgres:
+        image: postgres:latest
+        container_name: postgres-codelsoft
+        restart: always
+        environment:
+            POSTGRES_USER: user
+            POSTGRES_PASSWORD: userpassword
+            POSTGRES_DB: mydatabase
+            PGDATA: /data/postgres
+        ports:
+            - "5432:5432"
