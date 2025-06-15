@@ -157,13 +157,16 @@ const syncUserCreation = async (req, res) => {
             return res.status(409).json({ message: "El usuario ya existe." });
         }
 
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
         const newUser = await prisma.user.create({
             data: {
                 uuid: uuid,
                 name: name,
                 lastname: lastname,
                 email: email,
-                password: password,
+                password: hashedPassword,
                 role: role,
                 isActive: true,
                 createdAt: new Date(),
