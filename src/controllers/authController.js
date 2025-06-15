@@ -16,7 +16,7 @@ const login = async (req, res) => {
     if(!email || !password) {
         return res.status(400).json({ message: "Email y contraseña son requeridos" });
     }
-
+    
     if(email === undefined || password === undefined) {
         return res.status(400).json({ message: "Email y contraseña son requeridos" });
     }
@@ -51,7 +51,7 @@ const login = async (req, res) => {
         }
 
         const token = generateTokenJWT(userForToken);
-        res.status(200).json({ user: userForToken, token: generatedToken });
+        res.status(200).json({ user: userForToken, token: token });
 
     } catch (error) {
         console.error("Error en el inicio de sesión:", error);
