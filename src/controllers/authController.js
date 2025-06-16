@@ -62,6 +62,7 @@ const login = async (req, res) => {
 const updatePassword = async (req, res) => {
     const { current_password, new_password, password_confirmation } = req.body;
     const { uuid } = req.params;
+    console.log("UUID recibido:", uuid);
     const token = req.headers.authorization;
     
     if (!token) {
