@@ -133,11 +133,7 @@ const updatePassword = async (req, res) => {
 };
 
 const logout = (req, res) => {
-    const token = req.headers.authorization;
-    if (!token) {
-        return res.status(401).json({ message: "No se ha proporcionado un token de autenticación." });
-    }
-    
+    res.status(200).json({ message: "Sesión cerrada correctamente." });
 };
 
 const syncUserCreation = async (req, res) => {
